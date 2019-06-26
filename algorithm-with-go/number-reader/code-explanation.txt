@@ -1,0 +1,8 @@
+This approach is ideal to process required program. 
+1. Splitting the string parameter based on dot(.) Mark into array of string
+2. We can see in the first index it has prefix Dollars, in the second index it has prefix cents 
+3. To Read numbers into word we can iterate through how many characters of the string. if 
+    1, it must be unit only 
+    2, it must be dozens
+    3, it must be hundreds
+    4. it must be thousands

@@ -1,0 +1,31 @@
+Security:
+-  bearer
+  SecurityDefinitions:
+    bearer:
+-     type: apiKey
+-     name: Authorization
+in: header
+
+consumes:
+- application/json
+info:
+  title: Go Crud Postgre
+  version: 0.1.0
+paths: {}
+consumes:
+- application/json
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
+definitions : {}
+
+// swagger:route POST /repo repos users createRepoReq
+// Creates a new repository for the currently authenticated user.
+// If repository name is "exists", error conflict (409) will be returned.
+responses:
+  200: repoResp
+  400: badReq
+  409: conflict
+  500: internal

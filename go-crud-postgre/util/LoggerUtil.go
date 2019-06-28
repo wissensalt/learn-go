@@ -64,29 +64,9 @@ func DefineAppender() string {
 	return logFileToCreate
 }
 
-func LogInfo(p_Message ...interface{}) {
-	Rolling()
-	logger.Info(p_Message)
-}
-
-func LogWarn(p_Message ...interface{}) {
-	Rolling()
-	logger.Warning(p_Message)
-}
-
-func LogError(p_Message ...interface{}) {
-	Rolling()
-	logger.Error(p_Message)
-}
-
-func LogFatal(p_Message ...interface{}) {
-	Rolling()
-	logger.Fatal(p_Message)
-}
-
-func Rolling() {
+func RollingLog() {
 	if (currentLogFileIncrement <= 9) && (CheckFileSize(global.LoggerFile) >= maxLogSize()) {
-		logger.Info("End of Logger")
+		global.Logger.Info("End of Logger")
 		CloseLogger(global.LoggerFile, global.Logger)
 		InjectLogger()
 	}

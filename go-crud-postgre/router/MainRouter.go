@@ -5,6 +5,7 @@ import (
 
 	"../controller"
 	"../global"
+	"../util"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -27,8 +28,12 @@ func InitRouter() {
 			auth.GET("/findAll", controller.FindAll)
 			auth.POST("/findById", controller.FindById)
 			auth.POST("/insert", controller.InsertEmployee)
+			auth.POST("/update", controller.UpdateEmployee)
+			auth.POST("/delete", controller.DeleteEmployee)
 		}
 
 	}
+	global.Logger.Info("#ROUTER INITATED")
+	util.RollingLog()
 	r.Run(port)
 }

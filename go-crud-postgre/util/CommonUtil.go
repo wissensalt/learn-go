@@ -1,9 +1,11 @@
 package util
 
-import "github.com/google/logger"
+import "../global"
 
-func CheckErr(err error, logger *logger.Logger) {
+func CheckErr(err error) {
 	if err != nil {
-		logger.Fatal("An Error occured : ", err)
+		global.Logger.Error("An Error occured : ", err)
 	}
+
+	RollingLog()
 }

@@ -12,24 +12,24 @@ import (
 
 func main() {
 	util.InjectLogger()
+	global.Logger.Info("#LOGGER INITATED")
 
-	activeDB, err := config.Connect()
+	activeDB, err := config.PostgreSQLConnect()
 	if err != nil {
 		logger.Error("An Error Occured ", err)
 	} else {
 		InjectDB(activeDB, global.Logger)
 	}
 
-	util.LogInfo("#INITATE ROUTER")
 	router.InitRouter()
-
 	util.CloseLogger(global.LoggerFile, global.Logger)
 }
 
 func InjectDB(db *sql.DB, logger *logger.Logger) {
 	if db == nil {
 		logger.Error("Sql DB is NIL, Init new Connection")
-		db, _ = config.Connect()
+		db, _ = config.PostgreSQLConnect()
 	}
 	global.ActiveDB = db
+	global.Logger.Info("#DB CONNECTION ESTABLISHED")
 }

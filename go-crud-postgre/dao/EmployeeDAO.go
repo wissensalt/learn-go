@@ -6,13 +6,14 @@ import (
 	"../dto"
 	"../global"
 	"../util"
-	"github.com/google/logger"
 )
 
 const (
 	QUERY_FIND_ALL_EMPLOYEE   = "SELECT * FROM employee"
 	QUERY_FIND_BY_ID_EMPLOYEE = "SELECT * FROM employee WHERE ID = $1"
 	QUERY_INSERT_EMPLOYEE     = "INSERT INTO employee (code, name, address, salary) VALUES ($1, $2, $3, $4)"
+	QUERY_UPDATE_EMPLOYEE     = "UPDATE employee set code=$1, name=$2, address=$3, salary=$4 WHERE id=$1"
+	QUERY_DELETE_EMPLOYEE     = "DELETE employee WHERE id=$1"
 )
 
 func FindAllEmployee() []dto.Employee {
@@ -38,10 +39,11 @@ func FindAllEmployee() []dto.Employee {
 		tempEmployee.Address = address
 		tempEmployee.Salary = salary
 
-		util.LogInfo(global.LoggerFile, global.Logger, "Received Data : ", tempEmployee)
+		global.Logger.Info("Received Data : ", tempEmployee)
 
 		result = append(result, tempEmployee)
 	}
+	util.RollingLog()
 	return result
 }
 
@@ -55,7 +57,7 @@ func FindByIdEmployee(id int) dto.Employee {
 	row := global.ActiveDB.QueryRow(QUERY_FIND_BY_ID_EMPLOYEE, id)
 	switch err := row.Scan(&idR, &code, &name, &address, &salary); err {
 	case sql.ErrNoRows:
-		logger.Warning("No Rows Found")
+		global.Logger.Warning("No Rows Found")
 	case nil:
 		result.Id = idR
 		result.Code = code
@@ -63,12 +65,45 @@ func FindByIdEmployee(id int) dto.Employee {
 		result.Address = address
 		result.Salary = salary
 	default:
-		util.LogError("An Error Occured ", err)
+		global.Logger.Error("An Error Occured ", err)
 	}
+	util.RollingLog()
 	return result
 }
 
 func InsertEmployee(p_EmployeeDTO dto.Employee) (dto.Employee, error) {
-	_, err := global.ActiveDB.Query(QUERY_INSERT_EMPLOYEE, p_EmployeeDTO.Code, p_EmployeeDTO.Name, p_EmployeeDTO.Address, p_EmployeeDTO.Salary)
+	tx, err := global.ActiveDB.Begin()
+	_, err = global.ActiveDB.Query(QUERY_INSERT_EMPLOYEE, p_EmployeeDTO.Code, p_EmployeeDTO.Name, p_EmployeeDTO.Address, p_EmployeeDTO.Salary)
+	if err != nil {
+		tx.Rollback()
+		global.Logger.Error("Failed Insert Employee")
+		util.RollingLog()
+	}
+	util.CheckErr(tx.Commit())
+
 	return p_EmployeeDTO, err
+}
+
+func UpdateEmployee(p_EmployeeDTO dto.Employee) (dto.Employee, error) {
+	tx, err := global.ActiveDB.Begin()
+	_, err = global.ActiveDB.Query(QUERY_UPDATE_EMPLOYEE, p_EmployeeDTO.Code, p_EmployeeDTO.Name, p_EmployeeDTO.Address, p_EmployeeDTO.Salary)
+	if err != nil {
+		tx.Rollback()
+		global.Logger.Error("Error Update Employee")
+		util.RollingLog()
+	}
+	util.CheckErr(tx.Commit())
+	return p_EmployeeDTO, err
+}
+
+func DeleteEmployee(p_EmployeeId int) error {
+	tx, err := global.ActiveDB.Begin()
+	_, err = global.ActiveDB.Query(QUERY_DELETE_EMPLOYEE, p_EmployeeId)
+	if err != nil {
+		tx.Rollback()
+		global.Logger.Error("Error delete Employee")
+		util.RollingLog()
+	}
+	util.CheckErr(tx.Commit())
+	return err
 }

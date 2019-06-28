@@ -7,13 +7,12 @@ import (
 	"strconv"
 	"time"
 
-	"../global"
 	"../util"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
-func Connect() (*sql.DB, error) {
+func PostgreSQLConnect() (*sql.DB, error) {
 	err := godotenv.Load()
 	if err != nil {
 		panic("Error loading .env vars")
@@ -32,6 +31,6 @@ func Connect() (*sql.DB, error) {
 	activeDB.SetMaxOpenConns(maxOpenConnection)
 	activeDB.SetMaxIdleConns(maxIdleConnection)
 	activeDB.SetConnMaxLifetime(time.Hour)
-	util.CheckErr(err, global.Logger)
+	util.CheckErr(err)
 	return activeDB, err
 }

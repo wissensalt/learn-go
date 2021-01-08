@@ -1,0 +1,23 @@
+total 12848
+drwxr-xr-x  22 moka  staff   704B Jan  9 01:19 .
+drwxr-xr-x  13 moka  staff   416B Jan  8 22:47 ..
+-rw-r--r--   1 moka  staff   596B Dec 26 14:57 Array.go
+-rw-r--r--   1 moka  staff   543B Dec 26 14:57 Branching.go
+-rw-r--r--   1 moka  staff   254B Jan  9 01:12 BufIOInput.go
+-rw-r--r--   1 moka  staff   275B Jan  9 01:18 BufIOReadFile.go
+-rw-r--r--   1 moka  staff   218B Dec 26 14:57 Constants.go
+-rwxr-xr-x   1 moka  staff   2.1M Jan  8 23:07 DinnerTotal
+-rw-r--r--   1 moka  staff   687B Jan  8 23:07 DinnerTotal.go
+-rw-r--r--   1 moka  staff   292B Dec 26 14:57 DisplayValue.go
+-rwxr-xr-x   1 moka  staff   2.1M Jan  8 23:55 FlagTest
+-rw-r--r--   1 moka  staff   447B Jan  8 23:58 FlagTest.go
+-rw-r--r--   1 moka  staff    72B Dec 26 14:57 Hello.go
+-rw-r--r--   1 moka  staff   234B Dec 26 14:57 Iteration.go
+-rwxr-xr-x   1 moka  staff   2.0M Jan  8 22:50 OSArguments
+-rw-r--r--   1 moka  staff    91B Jan  8 22:49 OSArguments.go
+-rw-r--r--   1 moka  staff   158B Jan  9 00:01 OSVariables.go
+-rw-r--r--   1 moka  staff   529B Jan  9 00:13 ScanInput.go
+-rw-r--r--   1 moka  staff   569B Dec 26 14:57 Slice.go
+-rw-r--r--   1 moka  staff   1.6K Dec 26 14:57 Switch.go
+-rw-r--r--   1 moka  staff   211B Dec 26 14:57 Variables.go
+-rw-r--r--   1 moka  staff     0B Jan  9 01:19 test.txt
